@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% block title %}{{ title }} · CantiereSmart{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 12px 0">{{ title }}</h2>
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr">
+        <div style="grid-column:1 / -1"><label>Nome</label>{{ form.name }}</div>
+        <div><label>Padre</label>{{ form.parent }}</div>
+        <div><label>Peso</label>{{ form.weight }}</div>
+        <div><label>Progress (%)</label>{{ form.progress }}</div>
+        <div><label>Stato</label>{{ form.status }}</div>
+        <div><label>Ordine</label>{{ form.sort_order }}</div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px">
+        <button class="btn">Salva</button>
+        <a class="btn secondary" href="/projects/{{ project.id }}/">Annulla</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

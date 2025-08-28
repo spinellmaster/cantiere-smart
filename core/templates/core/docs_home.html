@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% block title %}Documenti HR · CantiereSmart{% endblock %}
+{% block content %}
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px">
+    <h2 style="margin:0">Documenti HR</h2>
+    <div class="badge">Cartelle personali</div>
+  </div>
+  <div class="card">
+    {% if roots %}
+      <div style="display:grid; gap:10px; grid-template-columns: repeat(3, minmax(0,1fr));">
+        {% for r in roots %}
+          <a class="card" style="padding:12px" href="/documents/folder/{{ r.id }}/">
+            <div style="font-weight:800">{{ r.name }}</div>
+            <div style="font-size:12px; color:#9a9a9a">{{ r.files.count }} file · {{ r.children.count }} sottocartelle</div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="font-size:14px; color:#9a9a9a">Nessuna cartella. Crea cartelle e file da <b>/admin</b> → User folders / User files.</div>
+    {% endif %}
+  </div>
+{% endblock %}

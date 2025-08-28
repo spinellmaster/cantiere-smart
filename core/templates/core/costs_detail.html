@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+{% block title %}Spesa #{{ doc.id }} · CantiereSmart{% endblock %}
+{% block content %}
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+    <h2 style="margin:0">Spesa #{{ doc.id }}</h2>
+    <div style="display:flex; gap:8px">
+      {% if request.user.is_staff %}
+        <a class="btn secondary" href="/costs/{{ doc.id }}/approve/">Approva</a>
+        <a class="btn secondary" href="/costs/{{ doc.id }}/reject/">Respingi</a>
+      {% endif %}
+      <a class="btn secondary" href="/costs">Indietro</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div><b>Progetto:</b> {{ doc.project.name }}</div>
+    <div><b>Utente:</b> {{ doc.user.username }}</div>
+    <div><b>Importo:</b> € {{ doc.amount_eur }} (IVA: {% if doc.with_vat %}inclusa{% else %}esclusa{% endif %})</div>
+    <div><b>Tipo:</b> {{ doc.get_doc_type_display }} · <b>Stato:</b> {{ doc.status }}</div>
+    {% if doc.work_item %}<div><b>Lavorazione:</b> {{ doc.work_item.name }}</div>{% endif %}
+    {% if doc.doc_url %}<div><b>Documento:</b> <a href="{{ doc.doc_url }}" target="_blank">{{ doc.doc_url }}</a></div>{% endif %}
+    {% if doc.note %}<div style="margin-top:8px"><b>Note:</b> {{ doc.note }}</div>{% endif %}
+    {% if doc.approved_by %}
+      <div style="margin-top:8px; font-size:12px; color:#9a9a9a">
+        Approvato da {{ doc.approved_by.username }} il {{ doc.approved_at }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if (not request.user.is_staff) or (doc.user_id == request.user.id) %}
+    <div style="margin-top:10px">
+      <a class="btn secondary" href="/costs/{{ doc.id }}/delete/">Elimina</a>
+    </div>
+  {% endif %}
+{% endblock %}

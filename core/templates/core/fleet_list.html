@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% block title %}Flotta mezzi · CantiereSmart{% endblock %}
+{% block content %}
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px">
+    <h2 style="margin:0">Flotta mezzi</h2>
+    <div class="badge">Gestione ritiro/riconsegna</div>
+  </div>
+
+  <div class="card">
+    {% if items %}
+      <div style="display:grid; gap:12px; grid-template-columns: repeat(3, minmax(0,1fr));">
+        {% for v in items %}
+          <a href="/fleet/{{ v.id }}/" class="card" style="padding:12px">
+            <div style="display:flex; justify-content:space-between">
+              <div>
+                <div style="font-weight:800">{{ v.plate }}</div>
+                <div style="font-size:12px; color:#9a9a9a">{{ v.name }} · {{ v.vehicle_type }}</div>
+              </div>
+              <span class="badge" style="{% if v.status == 'available' %}color:#00d084{% elif v.status == 'in_use' %}color:#F4B000{% elif v.status == 'maintenance' %}color:#FF7A00{% else %}color:#ff6b6b{% endif %}">
+                {{ v.status }}
+              </span>
+            </div>
+            <div style="font-size:12px; margin-top:6px">Km: {{ v.odometer_km }} · Carburante: {{ v.fuel_level_percent }}%</div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="font-size:14px; color:#9a9a9a">Nessun mezzo censito.</div>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "core/base.html" %}
+{% block title %}Ritiro mezzo · CantiereSmart{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 12px 0">Ritira {{ v.plate }} — {{ v.name }}</h2>
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr">
+        <div style="grid-column:1 / -1"><label>Progetto (opz.)</label>{{ form.project }}</div>
+        <div><label>Km iniziali</label>{{ form.start_odometer_km }}</div>
+        <div><label>Carburante iniziale (%)</label>{{ form.start_fuel_percent }}</div>
+        <div style="grid-column:1 / -1"><label>Note ritiro (opz.)</label>{{ form.notes_out }}</div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px">
+        <button class="btn">Conferma ritiro</button>
+        <a class="btn secondary" href="/fleet/{{ v.id }}/">Annulla</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

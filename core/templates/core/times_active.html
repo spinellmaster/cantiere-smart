@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% block title %}Timbratura attiva · CantiereSmart{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 12px 0">Timbratura attiva</h2>
+  {% if active %}
+    <div class="card">
+      <div>Progetto: <b>{{ active.project.name }}</b></div>
+      <div>Inizio: {{ active.start_time }}</div>
+      <div style="margin-top:10px">
+        <a class="btn" href="/times/{{ active.id }}/">Vai al dettaglio</a>
+      </div>
+    </div>
+  {% else %}
+    <div class="card">Nessuna timbratura attiva. <a class="btn" style="margin-left:8px" href="/times/start/">Avvia</a></div>
+  {% endif %}
+{% endblock %}

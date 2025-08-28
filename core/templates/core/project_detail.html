@@ -1,0 +1,54 @@
+{% extends "core/base.html" %}
+{% block title %}Progetto · CantiereSmart{% endblock %}
+{% block content %}
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+    <h2 style="margin:0">{{ p.name }}</h2>
+    <div><a class="btn" href="/projects/{{ p.id }}/work-items/new/">Nuova lavorazione</a></div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:800; margin-bottom:8px">Lavorazioni</div>
+    {% if tree %}
+      <div style="display:grid; gap:6px">
+        {% for level1 in tree %}
+          {% with wi=level1.node %}
+          <div class="card" style="padding:10px">
+            <div style="display:flex; justify-content:space-between; align-items:center">
+              <div>
+                <div style="font-weight:700">{{ wi.name }}</div>
+                <div style="font-size:12px; color:#9a9a9a">Stato: {{ wi.status }} · Progress: {{ wi.progress }}%</div>
+              </div>
+              <div>
+                <a class="btn secondary" href="/work-items/{{ wi.id }}/edit/">Modifica</a>
+                <a class="btn secondary" href="/work-items/{{ wi.id }}/delete/">Elimina</a>
+              </div>
+            </div>
+            {% if level1.children %}
+              <div style="margin-top:8px; display:grid; gap:6px">
+                {% for child in level1.children %}
+                  {% with w=child.node %}
+                  <div class="card" style="padding:10px">
+                    <div style="display:flex; justify-content:space-between; align-items:center">
+                      <div>
+                        <div style="font-weight:700">{{ w.name }}</div>
+                        <div style="font-size:12px; color:#9a9a9a">Stato: {{ w.status }} · Progress: {{ w.progress }}%</div>
+                      </div>
+                      <div>
+                        <a class="btn secondary" href="/work-items/{{ w.id }}/edit/">Modifica</a>
+                        <a class="btn secondary" href="/work-items/{{ w.id }}/delete/">Elimina</a>
+                      </div>
+                    </div>
+                  </div>
+                  {% endwith %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          {% endwith %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="font-size:14px; color:#9a9a9a">Nessuna lavorazione.</div>
+    {% endif %}
+  </div>
+{% endblock %}

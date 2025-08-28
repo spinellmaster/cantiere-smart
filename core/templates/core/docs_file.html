@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+{% block title %}{{ f.title }} · Documenti HR{% endblock %}
+{% block content %}
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px">
+    <h2 style="margin:0">{{ f.title }}</h2>
+    <div style="display:flex; gap:8px">
+      <a class="btn secondary" href="/documents/folder/{{ f.folder.id }}/">Torna alla cartella</a>
+      <a class="btn" href="{{ f.file_url }}" target="_blank">Apri documento</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px; color:#cfcfcf; margin-bottom:8px">
+      Categoria: <b>{{ f.get_category_display }}</b> · Inserito: {{ f.created_at }}
+    </div>
+    <div style="display:flex; gap:12px; align-items:center">
+      <span class="badge" style="color:{% if f.read_at %}#00d084{% else %}#F4B000{% endif %}">
+        Lettura: {% if f.read_at %}{{ f.read_at }}{% else %}non ancora{% endif %}
+      </span>
+      {% if f.requires_ack %}
+        <span class="badge" style="color:{% if f.ack_at %}#00d084{% else %}#F4B000{% endif %}">
+          Presa visione: {% if f.ack_at %}{{ f.ack_at }}{% else %}manca{% endif %}
+        </span>
+      {% endif %}
+    </div>
+
+    {% if f.requires_ack and not f.ack_at %}
+      <form method="post" style="margin-top:12px">
+        {% csrf_token %}
+        <button class="btn">Confermo presa visione</button>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}

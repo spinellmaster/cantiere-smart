@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block title %}Nuova spesa · CantiereSmart{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 12px 0">{{ title }}</h2>
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+      <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr">
+        <div>
+          <label>Progetto</label><br>
+          {{ form.project }}
+        </div>
+        <div>
+          <label>Lavorazione (opz.)</label><br>
+          {{ form.work_item }}
+        </div>
+        <div>
+          <label>Tipo documento</label><br>
+          {{ form.doc_type }}
+        </div>
+        <div>
+          <label>Importo (€)</label><br>
+          {{ form.amount_eur }}
+        </div>
+        <div>
+          <label>IVA inclusa?</label><br>
+          {{ form.with_vat }}
+        </div>
+        <div style="grid-column:1 / -1">
+          <label>URL documento (opz.)</label><br>
+          {{ form.doc_url }}
+        </div>
+        <div style="grid-column:1 / -1">
+          <label>Note (opz.)</label><br>
+          {{ form.note }}
+        </div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px">
+        <button class="btn">Salva</button>
+        <a class="btn secondary" href="/costs">Annulla</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

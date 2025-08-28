@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Login · CantiereSmart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body { margin:0; background:#0A0A0A; color:#eaeaea; font-family:system-ui, Arial; display:grid; place-items:center; min-height:100vh }
+    .card { width:360px; background:#121212; border:1px solid #2a2a2a; border-radius:14px; padding:16px; }
+    .btn { background:#F4B000; color:#111; border:none; padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer; width:100% }
+    input { width:100%; background:#1e1e1e; border:1px solid #333; color:#e8e8e8; border-radius:10px; padding:10px; }
+    label { font-size:12px; color:#a0a0a0 }
+    a { color:#F4B000; text-decoration:none }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px">
+      <div style="width:36px;height:36px;border-radius:10px;background:#F4B000;display:grid;place-items:center;color:#111;font-weight:900">CS</div>
+      <div style="font-size:14px;color:#9a9a9a">CantiereSmart</div>
+    </div>
+    {% if messages %}
+      <div style="display:grid; gap:8px; margin-bottom:12px">
+        {% for m in messages %}<div style="background:#3b0a0a; border:1px solid #7a1d1d; color:#f3bbbb; padding:8px 12px; border-radius:10px">{{ m }}</div>{% endfor %}
+      </div>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <div style="display:grid; gap:10px">
+        <div>
+          <label>Username o Email</label><br>
+          <input name="email" placeholder="es. admin o admin@demo.it">
+        </div>
+        <div>
+          <label>Password</label><br>
+          <input name="password" type="password">
+        </div>
+        <button class="btn">Accedi</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

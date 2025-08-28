@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "*.html": "django-html"
+  },
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+  "python.defaultInterpreterPath": "D:\\CANTIERE SMART\\cantiere-smart-django\\.venv\\Scripts\\python.exe"
+}

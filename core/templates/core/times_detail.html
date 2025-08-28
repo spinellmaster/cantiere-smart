@@ -1,0 +1,54 @@
+{% extends "core/base.html" %}
+{% block title %}Timbratura #{{ ts.id }} · CantiereSmart{% endblock %}
+{% block content %}
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+    <h2 style="margin:0">Timbratura #{{ ts.id }}</h2>
+    <div style="display:flex; gap:8px">
+      {% if not ts.end_time %}
+        <a class="btn" href="/times/{{ ts.id }}/stop/">Chiudi timbratura</a>
+      {% endif %}
+      <a class="btn secondary" href="/times">Indietro</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div>Progetto: <b>{{ ts.project.name }}</b></div>
+    <div>Inizio: {{ ts.start_time }} · Fine: {{ ts.end_time|default:"(in corso)" }}</div>
+    <div>Durata (minuti): {{ ts.duration_minutes }}</div>
+    {% if ts.note %}
+      <div style="margin-top:6px; font-size:12px; color:#9a9a9a">Note: {{ ts.note }}</div>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center">
+      <div style="font-weight:800; margin-bottom:8px">Allocazioni su lavorazioni</div>
+      {% if not ts.end_time %}
+        <a class="btn" href="/times/{{ ts.id }}/alloc/add/">Aggiungi allocazione</a>
+      {% endif %}
+    </div>
+
+    {% if ts.allocations.all %}
+      <div style="display:grid; gap:8px; margin-top:8px">
+        {% for a in ts.allocations.all %}
+          <div class="card" style="padding:10px">
+            <div style="display:flex; justify-content:space-between">
+              <div>
+                <div style="font-weight:700">{{ a.work_item.name }}</div>
+                <div style="font-size:12px; color:#9a9a9a">
+                  Minuti: {{ a.minutes_allocated|default:"-" }} · Percentuale: {{ a.percent_allocated|default:"-" }}%
+                </div>
+                {% if a.note %}<div style="font-size:12px; color:#cfcfcf">Note: {{ a.note }}</div>{% endif %}
+              </div>
+              {% if not ts.end_time %}
+                <div><a class="btn secondary" href="/times/alloc/{{ a.id }}/delete/">Elimina</a></div>
+              {% endif %}
+            </div>
+          </div>
+        {% empty %}
+          <div style="font-size:14px; color:#9a9a9a">Nessuna allocazione ancora.</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

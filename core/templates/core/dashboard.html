@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% block title %}Dashboard · CantiereSmart{% endblock %}
+{% block content %}
+  <h2 style="margin:0 0 12px 0">Dashboard</h2>
+  <div class="grid" style="grid-template-columns: repeat(4, minmax(0,1fr)); margin-bottom:12px">
+    <div class="kpi"><div class="label">Progetti</div><div class="value">{{ kpi_projects }}</div></div>
+    <div class="kpi"><div class="label">Ore ultime 2 settimane</div><div class="value">{{ kpi_hours_week }}</div></div>
+    <div class="kpi"><div class="label">Stato server</div><div class="value">OK</div></div>
+    <div class="kpi"><div class="label">Utente</div><div class="value">{{ request.user.username }}</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <div style="font-weight:800; margin-bottom:8px">Progetti recenti</div>
+    {% if recent_projects %}
+      <div style="display:grid; gap:8px; grid-template-columns: repeat(3, minmax(0,1fr));">
+        {% for p in recent_projects %}
+          <a class="card" style="padding:12px" href="/projects/{{ p.id }}/">
+            <div style="font-weight:800">{{ p.name }}</div>
+            <div style="font-size:12px; color:#9a9a9a">{{ p.client_name|default:"-" }} · {{ p.status }}</div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div style="font-size:14px; color:#9a9a9a">Nessun progetto ancora.</div>
+    {% endif %}
+  </div>
+{% endblock %}
